@@ -1,6 +1,4 @@
-# /etc/cron.d/si_cron: crontab fragment for simpleinvoices Recurrent Invoices Daily Cron
-#  This creates recurring invoices for simpleinvoices once a day
-
+# execute "crontab si_cron" in linux to activate this cron file - si_cron
 #Simple Invoices recurrence - run each day at 1AM
-#0 1 * * * /usr/bin/wget -q "http://www.si_domain.tld/index.php?module=api&view=cron"
-0 1 * * * /usr/bin/wget -q "http://localhost/index.php?module=api&view=cron"
+0 1 * * * /usr/bin/wget -q -O - http://localhost/api-cron  >/dev/null 2>&1
+
