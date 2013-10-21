@@ -1,4 +1,2 @@
-# execute "crontab si_cron" in linux to activate this cron file - si_cron
 #Simple Invoices recurrence - run each day at 1AM
 0 1 * * * /usr/bin/wget -q -O - http://localhost/api-cron  >/dev/null 2>&1
-
