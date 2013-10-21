@@ -1292,7 +1292,7 @@ ADD `language` VARCHAR( 255 ) NULL ;";
     {
         $patch['213']['patch'] = "insert into `".TB_PREFIX."index` (id, node, sub_node, domain_id)  VALUES (".$max_invoice.", 'invoice', '".$defaults['preference']."','1');";
     } else {
-        $patch['213']['patch'] = "select 1 from `".TB_PREFIX."index`;";
+        $patch['213']['patch'] = "select 1+1;";
     }
     $patch['213']['date'] = "20090902";
 
@@ -1307,7 +1307,7 @@ ADD `language` VARCHAR( 255 ) NULL ;";
             $patch['215']['name'] = "si_invoices - add composite primary key - patch removed";
             #$patch['215']['patch'] = "ALTER TABLE  `".TB_PREFIX."index` DROP PRIMARY KEY, ADD PRIMARY KEY(`domain_id`, `id`)";
             #$patch['215']['patch'] = "ALTER TABLE  `".TB_PREFIX."index` ADD PRIMARY KEY(`domain_id`, `id`)";
-            $patch['215']['patch'] = "select 1 from `".TB_PREFIX."index`;";
+            $patch['215']['patch'] = "select 1+1;";
             $patch['215']['date'] = "20090912";
 
             $patch['216']['name'] = "si_payment - add composite primary key";
