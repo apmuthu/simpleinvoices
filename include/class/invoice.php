@@ -11,7 +11,7 @@ class invoice {
     public $sort;
     public $where_field;
     public $where_value;
-	public $domain_id;
+    public $domain_id;
 
 	public function insert()
 	{
