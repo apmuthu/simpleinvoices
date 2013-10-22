@@ -19,6 +19,7 @@ nb_NO      | Norsk (Norwegian)             | All Done    |             587 |    
 nl_NL      | Nederlands (Dutch)            | All Done    |             587 |              369 |   62.86% | 
 pt_PT      | Portugues (Portuguese)        | All Done    |             587 |              312 |   53.15% | 
 ro_RO      | Romana (Romanian)             | All Done    |             587 |              352 |   59.97% | 
+ru_RU      | Russian (Russian)             | All Done    |             587 |              573 |   97.61% | 
 sk_SK      | Slovensky (Slovak)            | All Done    |             587 |              477 |   81.26% | 
 sl_SI      | Sloven??ina (Slovenian)       | All Done    |             587 |              291 |   49.57% | 
 sq_AL      | Shqip (Albanian)              | All Done    |             587 |              302 |   51.45% | 
