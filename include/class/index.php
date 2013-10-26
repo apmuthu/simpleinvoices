@@ -53,22 +53,20 @@ class index
 		return $sql;
 	}
 	
-    public static function next($node, $sub_node=0, $sub_node_2=0)
+    public static function next($node, $sub_node=0, $domain_id='', $sub_node_2=0)
     {
 
-        global $db;
-        global $auth_session;
+        $domain_id = domain_id::get($domain_id);
 
 		// node gets filtered here
         $sql = index::get_index_sql($node);
 		if ($sql === false) die ("Invalid Node: $node for Invoice");
 
 
-		$sth = $db->query($sql,
+		$sth = dbQuery($sql,
 			 ':sub_node', $sub_node, 
 		   ':sub_node_2', $sub_node_2,
-		    ':domain_id', $auth_session->domain_id)
-			or die(htmlsafe(end($dbh->errorInfo())));
+		    ':domain_id', $domain_id);
 
         $index = $sth->fetch();
 
@@ -79,18 +77,21 @@ class index
 
     }
 
-    public static function increment($node, $sub_node=0, $sub_node_2=0)
+    public static function increment($node, $sub_node=0, $domain_id='', $sub_node_2=0)
     {
     
-        $next = index::next($node, $sub_node, $sub_node_2);
+ 		// This method is needed only if si_index table is present and being used.
+       $domain_id = domain_id::get($domain_id);
+        $next = index::next($node, $sub_node, $sub_node_2, $domain_id);
 
         return $next;
 
     }
 
 
-    public static function rewind($node, $sub_node=0, $sub_node_2=0)
+    public static function rewind($node, $sub_node=0, $domain_id='', $sub_node_2=0)
     {
+        $domain_id = domain_id::get($domain_id);
 
 // This method does not seem to be used now.
 
