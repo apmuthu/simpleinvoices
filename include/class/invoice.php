@@ -138,12 +138,12 @@ class invoice {
 		return $inv_item_id;
 	}
 
-    public static function select($id, $domainid="")
+    public static function select($id, $domain_id="")
     {
 		global $logger;
 		global $db;
 
-		$domain_id = domain_id::get($domainid);
+		$domain_id = domain_id::get($domain_id);
 
 		$sql = "SELECT 
                     i.*,
