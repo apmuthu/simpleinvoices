@@ -8,13 +8,12 @@ class cron {
 
 	public function insert()
 	{
-        	global $db;
 
 		$domain_id = domain_id::get($this->domain_id);
 		$today = date('Y-m-d');
 
         
-	        $sql = "INSERT INTO ".TB_PREFIX."cron (
+	    $sql = "INSERT INTO ".TB_PREFIX."cron (
 				domain_id,
 				invoice_id,
 				start_date,
@@ -23,7 +22,7 @@ class cron {
 				recurrence_type,
 				email_biller,
 				email_customer
-			) VALUES (
+		) VALUES (
 				:domain_id,
 				:invoice_id,
 				:start_date,
@@ -32,8 +31,8 @@ class cron {
 				:recurrence_type,
 				:email_biller,
 				:email_customer
-			)";
-        	$sth = $db->query($sql,
+		)";
+        $sth = dbQuery($sql,
 				':domain_id',$domain_id, 
 				':invoice_id',$this->invoice_id,
 				':start_date',$this->start_date,
@@ -42,19 +41,19 @@ class cron {
 				':recurrence_type',$this->recurrence_type,
 				':email_biller',$this->email_biller,
 				':email_customer',$this->email_customer
-			) or die(htmlsafe(end($dbh->errorInfo())));
+		);
         
- 	       return $sth;
+ 	    return $sth;
 
 	}
 
 	public function update()
 	{
-        	global $db;
+        global $db;
 
 		$domain_id = domain_id::get($this->domain_id);
         
-	        $sql = "UPDATE 
+	    $sql = "UPDATE 
 				".TB_PREFIX."cron 
 			SET 
 				invoice_id = :invoice_id,
@@ -68,8 +67,8 @@ class cron {
 				id = :id 
 				AND 
 				domain_id = :domain_id
-			";
-        	$sth = $db->query($sql,
+		";
+        $sth = dbQuery($sql,
 				':id',$this->id, 
 				':domain_id',$domain_id, 
 				':invoice_id',$this->invoice_id,
@@ -79,9 +78,9 @@ class cron {
 				':recurrence_type',$this->recurrence_type,
 				':email_biller',$this->email_biller,
 				':email_customer',$this->email_customer
-			) or die(htmlsafe(end($dbh->errorInfo())));
+		);
         
- 	       return $sth;
+ 	    return $sth;
 	}
 
 	public function delete()
@@ -300,9 +299,9 @@ class cron {
                         ## email the people
                         
                         $invoice= invoice::select($new_invoice_id);
-                        $preference = getPreference($invoice['preference_id']);
-                        $biller = getBiller($invoice['biller_id']);
-                        $customer = getCustomer($invoice['customer_id']);
+                        $preference = getPreference($invoice['preference_id'], $domain_id);
+                        $biller = getBiller($invoice['biller_id'], $domain_id);
+                        $customer = getCustomer($invoice['customer_id'], $domain_id);
                         #print_r($customer);
                         #create PDF nameVj
                         $spc2us_pref = str_replace(" ", "_", $invoice['index_name']);
