@@ -29,11 +29,10 @@ INSERT INTO `si_index` (`id`, `node`, `sub_node`, `sub_node_2`, `domain_id`) VAL
 class index
 {
 
-    public static function next($node, $sub_node=0, $sub_node_2=0)
+    public static function next($node, $sub_node=0, $domain_id='', $sub_node_2=0)
     {
 
-        global $db;
-        global $auth_session;
+        $domain_id = domain_id::get($domain_id);
 
         $sql = "SELECT id 
                 FROM ".TB_PREFIX."index 
@@ -44,12 +43,11 @@ class index
 				";
 
 
-		$sth = $db->query($sql,
+		$sth = dbQuery($sql,
 				 ':node', $node,
 			 ':sub_node', $sub_node, 
 		   ':sub_node_2', $sub_node_2,
-		    ':domain_id', $auth_session->domain_id)
-			or die(htmlsafe(end($dbh->errorInfo())));
+		    ':domain_id', $domain_id);
 
         $index = $sth->fetch();
 
@@ -60,13 +58,13 @@ class index
 
     }
 
-    public static function increment($node, $sub_node=0, $sub_node_2=0)
+    public static function increment($node, $sub_node=0, $domain_id='', $sub_node_2=0)
     {
     
-        $next = index::next($node, $sub_node, $sub_node_2);
+       $domain_id = domain_id::get($domain_id);
+        $next = index::next($node, $sub_node, $domain_id, $sub_node_2);
 
-        global $db;
-        global $auth_session;
+
         
         if ($next == 1)
         {
@@ -85,24 +83,22 @@ class index
 				  ";
         }
 
-        $sth = $db->query($sql,
+        $sth = dbQuery($sql,
 				    ':id',$next,
 				  ':node',$node,
 			 ':sub_node', $sub_node,
 		   ':sub_node_2', $sub_node_2,
-			 ':domain_id',$auth_session->domain_id) 
-				or die(htmlsafe(end($dbh->errorInfo())));
+			 ':domain_id',$domain_id); 
 
         return $next;
 
     }
 
 
-    public static function rewind($node, $sub_node=0, $sub_node_2=0)
+    public static function rewind($node, $sub_node=0, $domain_id='', $sub_node_2=0)
     {
 
-        global $db;
-        global $auth_session;
+        $domain_id = domain_id::get($domain_id);
         
         $sql = "UPDATE ".TB_PREFIX."index 
                 SET id = (id - 1) 
@@ -112,12 +108,11 @@ class index
                 AND domain_id = :domain_id
 			";
 
-		$sth = $db->query($sql,
+		$sth = dbQuery($sql,
 				 ':node', $node,
 			 ':sub_node', $sub_node, 
 		   ':sub_node_2', $sub_node_2,
-		    ':domain_id', $auth_session->domain_id) 
-				or die(htmlsafe(end($dbh->errorInfo())));
+		    ':domain_id', $domain_id); 
 
         return $sth;
 
