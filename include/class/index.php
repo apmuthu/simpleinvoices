@@ -82,7 +82,7 @@ class index
     
  		// This method is needed only if si_index table is present and being used.
        $domain_id = domain_id::get($domain_id);
-        $next = index::next($node, $sub_node, $sub_node_2, $domain_id);
+        $next = index::next($node, $sub_node, $domain_id, $sub_node_2);
 
         return $next;
 
