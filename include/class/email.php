@@ -14,6 +14,7 @@ class email
 	public $end_date;
 	public $biller_id;
 	public $customer_id;
+	public $domain_id;
 
 	function send()
 	{
@@ -169,7 +170,6 @@ class email
     public function get_admin_email()
     {
     
-        global $db;
 		$domain_id = domain_id::get($this->domain_id);
 
 		$sql = "SELECT u.email 
@@ -180,7 +180,7 @@ class email
 					AND domain_id = :domain_id 
 				LIMIT 1
 		";
-        $sth  = $db->query($sql,':domain_id',$domain_id) or die(htmlsafe(end($dbh->errorInfo())));
+        $sth  = dbQuery($sql,':domain_id',$domain_id);
  
         return $sth->fetchColumn();
 

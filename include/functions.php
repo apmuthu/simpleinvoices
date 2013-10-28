@@ -427,27 +427,8 @@ function checkConnection() {
 	
 	if(!$dbh) {
 		simpleInvoicesError("dbConnection",$db_server,$dbh->errorInfo());
-/*
-		die('<br />
-		===========================================<br />
-		Simple Invoices database connection problem<br />
-		===========================================<br />
-		Could not connect to the Simple Invoices database<br /><br />
-		Please refer to the following database ('.$db_server.') error for for to fix this: <b>ERROR :' . end($dbh->errorInfo()) . '</b><br /><br />
-		If this is an Access denied error please make sure that the db_host, db_name, db_user, and db_password in config/config.php are correct 
-		<br />
-		===========================================<br />
-		');
-*/
 	}
 }
-
-function menuIsActive($module,$requestedModule) {
-	if ($module == $requestedModule) {
-		echo "id=active";
-	}
-}
-
 
 function getLangList() {
  $startdir = './lang/';
@@ -459,8 +440,6 @@ function getLangList() {
           while (($folder = readdir($dh)) !== false){
               if (!(array_search($folder,$ignoredDirectory) > -1)){
                 if (filetype($startdir . $folder) == "dir"){
-//                      $directorylist[$startdir . $folder]['name'] = $folder;
-//                     $directorylist[$startdir . $folder]['path'] = $startdir;
 					  $folderList[] = $folder;
                   }
               }
