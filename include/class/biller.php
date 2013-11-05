@@ -2,13 +2,19 @@
 
 class biller
 {    
-    public static function get_all($domain_id='')
+	public $domain_id;
+    
+	public function __construct()
+	{
+		$this->domain_id = domain_id::get($this->domain_id);
+	}
+
+    public static function get_all()
     {
         global $LANG;
-        $domain_id = domain_id::get($domain_id);
 
         $sql = "SELECT * FROM ".TB_PREFIX."biller WHERE domain_id = :domain_id ORDER BY name";
-        $sth  = dbQuery($sql,':domain_id',$domain_id);
+        $sth  = dbQuery($sql,':domain_id',$this->domain_id);
         
         $billers = null;
         
@@ -25,17 +31,16 @@ class biller
         return $billers;
     }
 
-    public static function select($id, $domain_id='')
+    public static function select($id)
     {
         global $LANG;
-        $domain_id = domain_id::get($domain_id);
         
         $sql = "SELECT * FROM ".TB_PREFIX."biller WHERE domain_id = :domain_id AND id = :id";
-        $sth  = dbQuery($sql,':domain_id',$domain_id, ':id',$id);
+        $sth  = dbQuery($sql,':domain_id',$this->domain_id, ':id',$id);
         
-	$biller = $sth->fetch();
-	$biller['wording_for_enabled'] = $biller['enabled']==1?$LANG['enabled']:$LANG['disabled'];
-	return $biller;
-        #return $sth->fetch();
+		$biller = $sth->fetch();
+		$biller['wording_for_enabled'] = $biller['enabled']==1?$LANG['enabled']:$LANG['disabled'];
+
+		return $biller;
     }
 }
