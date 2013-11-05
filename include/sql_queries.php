@@ -1133,8 +1133,8 @@ function setStatusExtension($extension_id, $status=2, $domain_id='') {
 		$status = 1 - $extension_info['enabled'];
 	}
 
-	$sql = "UPDATE ".TB_PREFIX."extensions SET enabled =  :status WHERE id =  :id AND domain_id =  :domain_id LIMIT 1"; 
-	if (dbQuery($sql, ':status', $status,':id', $extension_id, ':domain_id', $auth_session->domain_id)) {
+	$sql = "UPDATE ".TB_PREFIX."extensions SET enabled =  :status WHERE id =  :id AND domain_id =  :domain_id"; 
+	if (dbQuery($sql, ':status', $status,':id', $extension_id, ':domain_id', $domain_id)) {
 		return true;
 	}
 	return false;
