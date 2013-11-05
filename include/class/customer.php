@@ -9,7 +9,7 @@ class customer
 		$this->domain_id = domain_id::get($this->domain_id);
 	}
 
-    public static function get($id)
+    public function get($id)
     {
 
         $sql = "SELECT * FROM ".TB_PREFIX."customers WHERE domain_id = :domain_id and id = :id";
@@ -18,7 +18,7 @@ class customer
         return $sth->fetch();
     }
 
-    public static function get_all()
+    public function get_all()
     {
         global $LANG;
 

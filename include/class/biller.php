@@ -9,7 +9,7 @@ class biller
 		$this->domain_id = domain_id::get($this->domain_id);
 	}
 
-    public static function get_all()
+    public function get_all()
     {
         global $LANG;
 
@@ -31,7 +31,7 @@ class biller
         return $billers;
     }
 
-    public static function select($id)
+    public function select($id)
     {
         global $LANG;
         
