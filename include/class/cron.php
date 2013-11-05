@@ -146,6 +146,30 @@ class cron {
 		}
 	}
 
+    public function select_crons_to_run()
+    {
+        // Use this function to select crons that need to run each day across all domain_id values
+
+        $sql = "SELECT
+                  cron.*
+                , cron.id as cron_id
+                , (SELECT CONCAT(pf.pref_description,' ',iv.index_id)) as index_name
+            FROM 
+                ".TB_PREFIX."cron cron 
+                INNER JOIN ".TB_PREFIX."invoices iv 
+                    ON (cron.invoice_id = iv.id AND cron.domain_id = iv.domain_id)
+                INNER JOIN ".TB_PREFIX."preferences pf 
+                    ON (iv.preference_id = pf.pref_id AND iv.domain_id = pf.domain_id)
+            WHERE NOW() BETWEEN cron.start_date AND cron.end_date
+            GROUP BY cron.id
+        ";
+
+        $sth = dbQuery($sql);
+
+        return $sth->fetchAll();
+
+    }
+
 	public function select()
 	{
 		global $LANG;
