@@ -126,7 +126,7 @@ class invoice {
 		return $inv_item_id;
 	}
 
-    public static function select($id, $domain_id='')
+    public function select($id, $domain_id='')
     {
 		global $logger;
 
@@ -173,7 +173,7 @@ class invoice {
     
 	}
 
-    public static function get_all($domain_id='')
+    public function get_all($domain_id='')
     {
 		global $logger;
 
@@ -197,7 +197,7 @@ class invoice {
 
     }
 
-    public static function count($domain_id='')
+    public function count($domain_id='')
     {
 		global $logger;
 
@@ -426,7 +426,7 @@ class invoice {
 
     }
 
-	public static function getInvoiceItems($id, $domain_id='') {
+	public function getInvoiceItems($id, $domain_id='') {
 	
 		global $logger;
 		
@@ -478,7 +478,7 @@ class invoice {
 	* Called directly from index.php with invoice::are_there_any()
 	* and hence cannot use the $this property
     **/
-    public static function are_there_any($domain_id='')
+    public function are_there_any($domain_id='')
     {
 		$domain_id = domain_id::get($domain_id);
 
@@ -494,7 +494,7 @@ class invoice {
     * 
     * Used to get the gross total for a given invoice number
     **/
-    public static function getInvoiceGross($invoice_id, $domain_id='') {
+    public function getInvoiceGross($invoice_id, $domain_id='') {
         global $LANG;
         
 		$domain_id = domain_id::get($domain_id);
@@ -512,7 +512,7 @@ class invoice {
 	* is called directly from sql_patches.php with invoice::max()
 	* and hence $this->domain_id is not usable 
     **/
-    public static function max($domain_id='') {
+    public function max($domain_id='') {
 
         global $logger;
 
