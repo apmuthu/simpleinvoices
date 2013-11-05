@@ -2,7 +2,7 @@
 // Fails on overriding parent public static class method of same name
 // Late binding absent in general in PHP
 class text_ui_invoice extends invoice {
-    function getInvoiceItems($id, $domain_id='') {
+    public static function getInvoiceItems($id, $domain_id='') {
 
 // $domain_id is a parent class member
         $domain_id = domain_id::get($domain_id);
