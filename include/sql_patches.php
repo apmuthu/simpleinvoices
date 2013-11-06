@@ -1286,7 +1286,9 @@ ADD `language` VARCHAR( 255 ) NULL ;";
     $patch['212']['patch'] = "update `".TB_PREFIX."invoices` set index_id = id;";
     $patch['212']['date'] = "20090902";
 
-    $max_invoice = invoice::max();
+	$invoiceobj = new invoice();
+    $max_invoice = $invoiceobj->max();
+	unset($invoiceobj);
     $patch['213']['name'] = "Update the index table with max invoice id - if required";
     if($max_invoice > "0")
     {

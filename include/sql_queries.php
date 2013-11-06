@@ -1008,20 +1008,21 @@ function getInvoice($id, $domain_id='') {
 	//print_r($query);
 	$invoice = $sth->fetch();
 	
-	//print_r($invoice);
-	//exit();
-	
 	$invoice['calc_date'] = date('Y-m-d', strtotime( $invoice['date'] ) );
 	$invoice['date'] = siLocal::date( $invoice['date'] );
 	$invoice['total'] = getInvoiceTotal($invoice['id']);
-	$invoice['gross'] = invoice::getInvoiceGross($invoice['id']);
+
+	$invoiceobj = new invoice();
+	$invoiceobj->domain_id = $domain_id;
+	$invoice['gross'] = $invoiceobj->getInvoiceGross($invoice['id']);
+
 	$invoice['paid'] = calc_invoice_paid($invoice['id']);
 	$invoice['owing'] = $invoice['total'] - $invoice['paid'];
 
 	
 	#invoice total tax
 	$sql ="SELECT SUM(tax_amount) AS total_tax, SUM(total) AS total FROM ".TB_PREFIX."invoice_items WHERE invoice_id =  :id AND domain_id =  :domain_id";
-	$sth = dbQuery($sql, ':id', $id, ':domain_id', $domain_id) or die(htmlsafe(end($dbh->errorInfo())));
+	$sth = dbQuery($sql, ':id', $id, ':domain_id', $domain_id);
 	$result = $sth->fetch();
 	//$invoice['total'] = number_format($result['total'],2);
 	$invoice['total_tax'] = $result['total_tax'];
@@ -2005,7 +2006,8 @@ function updateInvoice($invoice_id, $domain_id='') {
     global $db_server;
     $domain_id = domain_id::get($domain_id);
 
-    $current_invoice = invoice::select($_POST['id']);
+	$invoiceobj = new invoice();
+    $current_invoice = $invoiceobj->select($_POST['id']);
     $current_pref_group = getPreference($current_invoice[preference_id]);
 
     $new_pref_group=getPreference($_POST[preference_id]);
