@@ -1,6 +1,7 @@
 <?php
 class invoice {
 	
+    public $id;
     public $start_date;
     public $end_date;
     public $having;
@@ -519,7 +520,7 @@ class invoice {
 
 	public function recur()
 	{
-		$invoice = $this->select($this->id);
+		$invoice = $this->select($this->id, $this->domain_id);
 		$ni = new invoice();
 		$ni->domain_id     = $invoice['domain_id'];
 		$ni->biller_id     = $invoice['biller_id'];
