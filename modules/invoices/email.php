@@ -16,7 +16,9 @@ checkLogin();
 #get the invoice id
 $invoice_id = $_GET['id'];
 
-$invoice = invoice::select($invoice_id);
+$invoiceobj = new invoice();
+$invoice = $invoiceobj->select($invoice_id);
+
 $preference = getPreference($invoice['preference_id']);
 $biller = getBiller($invoice['biller_id']);
 $customer = getCustomer($invoice['customer_id']);

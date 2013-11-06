@@ -16,8 +16,8 @@ if ($_POST['op'] =='edit' AND !empty($_POST['invoice_id']))
 
 	$saved = !empty($result) ? "true" : "false";
 }      
-
-$invoice_all = invoice::get_all();
+$invoiceobj = new invoice();
+$invoice_all = $invoiceobj->get_all();
 
 $get_cron = new cron();
 $get_cron->id = $_GET['id'];
