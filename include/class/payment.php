@@ -17,7 +17,9 @@ class payment
     public function count()
     {
 
-        $where = '';        if($this->filter == "online_payment_id")
+        $where = '';
+
+        if($this->filter == "online_payment_id")
         {
             $where .= " AND ap.online_payment_id = '$this->online_payment_id'";
         }
@@ -28,7 +30,7 @@ class payment
                     ".TB_PREFIX."payment ap
                 WHERE 
                     domain_id = :domain_id
-        $where";
+					$where";
 
         $sth = dbQuery($sql, ':domain_id', $this->domain_id);
         $payment = $sth->fetch();
