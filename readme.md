@@ -1,10 +1,19 @@
+# apmuthu fork notes
+Differences with upstream master codebasewhich exclusively includes the following files apart from mods needed for them:
+1. si_cron script used for recurring invoice generation in linux
+2. [PHPCAPTCHA](http://www.phpcaptcha.org) and hooks for it for login (set in config/defines.php)
+3. Fully RDBMS compliant with no need for si_index table
+4. include/sql_patches.php has all needed patches enabled
+5. Releases of this fork do not contain the [Zend](https://github.com/dmelo/Zend-1.11/archive/27d7f1b3f45a436a9c795881db1d41689b8f9224.zip) library which must be separately downloaded and extracted into the library/Zend folder.
+6. If CAPTCHA feature is to be enabled, then follow instructions in the [securimage-readme.txt file](https://github.com/apmuthu/simpleinvoices/blob/master/library/securimage/securimage-readme.txt) in the <b>library/securimage</b> folder.
 # Simple Invoices
 Making invoicing rock since '05.
 
 ## Cloning
 SimpleInvoices using gitsubmodules to load the Zend Framework.  
 When cloning the repository use the `--recursive` option to ensure that Zend is retrieved.  
-`git clone --recursive git@github.com:simpleinvoices/simpleinvoices.git`
+Upstream: `git clone --recursive git@github.com:simpleinvoices/simpleinvoices.git`
+This fork: `git clone --recursive git@github.com:apmuthu/simpleinvoices.git`
 
 ## Downloads
 * Bleeding Edge Code: [SI Git Master](http://github.com/simpleinvoices/simpleinvoices/archive/master.zip) (.zip)
