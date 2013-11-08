@@ -1656,7 +1656,7 @@ PRIMARY KEY ( `domain_id`, `id` )
     $patch['288']['name']  = "Fully relational now - do away with the si_index table";
     $patch['288']['patch'] = "DROP TABLE IF EXISTS `".TB_PREFIX."index`;";
     $patch['288']['date']  = "20131017";
-	
+
     $patch['289']['name']  = "Each cron_id can run a maximum of only once a day for each domain_id";
     $patch['289']['patch'] = "ALTER TABLE `".TB_PREFIX."cron_log` ADD UNIQUE INDEX `CronIdUnq` (`domain_id`, `cron_id`, `run_date`);";
     $patch['289']['date']  = "20131108";
