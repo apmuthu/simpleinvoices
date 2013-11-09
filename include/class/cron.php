@@ -4,12 +4,23 @@ class cron {
 	
  	public $start_date;
  	public $domain_id;
+	public $invoice_id;
+	public $end_date;
+	public $recurrence;
+	public $recurrence_type;
+	public $email_biller;
+	public $email_customer;
+	public $sort;
 	public $id;
+
+	public function __construct()
+	{
+		$this->domain_id = domain_id::get($this->domain_id);
+	}
 
 	public function insert()
 	{
 
-		$domain_id = domain_id::get($this->domain_id);
 		$today = date('Y-m-d');
 
         
@@ -33,7 +44,7 @@ class cron {
 				:email_customer
 		)";
         $sth = dbQuery($sql,
-				':domain_id',$domain_id, 
+				':domain_id',$this->domain_id, 
 				':invoice_id',$this->invoice_id,
 				':start_date',$this->start_date,
 				':end_date',$this->end_date,
@@ -49,9 +60,6 @@ class cron {
 
 	public function update()
 	{
-        global $db;
-
-		$domain_id = domain_id::get($this->domain_id);
         
 	    $sql = "UPDATE 
 				".TB_PREFIX."cron 
@@ -70,7 +78,7 @@ class cron {
 		";
         $sth = dbQuery($sql,
 				':id',$this->id, 
-				':domain_id',$domain_id, 
+				':domain_id',$this->domain_id, 
 				':invoice_id',$this->invoice_id,
 				':start_date',$this->start_date,
 				':end_date',$this->end_date,
@@ -91,7 +99,7 @@ class cron {
     public function select_all($type='', $dir='DESC', $rp='25', $page='1')
 	{
 		global $LANG;
-		global $db;
+
 		/*SQL Limit - start*/
 		$start = (($page-1) * $rp);
 		$limit = "LIMIT ".$start.", ".$rp;
@@ -137,7 +145,7 @@ class cron {
 			$sort $dir
 			$limit";
 
-		$sth = $db->query($sql,':domain_id',domain_id::get($this->domain_id)) or die(htmlsafe(end($dbh->errorInfo())));
+		$sth = dbQuery($sql, ':domain_id', $this->domain_id);
 		if($type =="count")
 		{
 			return $sth->rowCount();
@@ -161,7 +169,7 @@ class cron {
                 INNER JOIN ".TB_PREFIX."preferences pf 
                     ON (iv.preference_id = pf.pref_id AND iv.domain_id = pf.domain_id)
             WHERE NOW() BETWEEN cron.start_date AND cron.end_date
-            GROUP BY cron.id
+            GROUP BY cron.id, cron.domain_id
         ";
 
         $sth = dbQuery($sql);
@@ -173,7 +181,6 @@ class cron {
 	public function select()
 	{
 		global $LANG;
-		global $db;
 
 		$sql = "SELECT
 				cron.*
@@ -186,7 +193,7 @@ class cron {
 					ON (iv.preference_id = pf.pref_id AND iv.domain_id = pf.domain_id)
 			WHERE cron.domain_id = :domain_id
 			  AND cron.id = :id;";
-		$sth = $db->query($sql,':domain_id',domain_id::get($this->domain_id), ':id',$this->id) or die(htmlsafe(end($dbh->errorInfo())));
+		$sth = dbQuery($sql, ':domain_id', $this->domain_id, ':id', $this->id);
 
 		return $sth->fetch();
 	}
