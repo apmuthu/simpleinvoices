@@ -2008,9 +2008,9 @@ function updateInvoice($invoice_id, $domain_id='') {
 
 	$invoiceobj = new invoice();
     $current_invoice = $invoiceobj->select($_POST['id']);
-    $current_pref_group = getPreference($current_invoice[preference_id]);
+    $current_pref_group = getPreference($current_invoice['preference_id']);
 
-    $new_pref_group=getPreference($_POST[preference_id]);
+    $new_pref_group=getPreference($_POST['preference_id']);
 
     $index_id = $current_invoice['index_id'];
 
