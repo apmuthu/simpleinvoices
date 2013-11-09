@@ -2,6 +2,29 @@
 class invoice {
 	
     public $id;
+    public $domain_id;
+	public $biller_id;
+	public $customer_id;
+	public $type_id;
+	public $preference_id;
+	public $date;
+	public $note;
+	public $custom_field1;
+	public $custom_field2;
+	public $custom_field3;
+	public $custom_field4;
+
+	public $invoice_id;
+	public $quantity;
+	public $product_id;
+	public $unit_price;
+	public $tax_amount;
+	public $gross_total;
+	public $description;
+	public $total;
+	public $attribute;
+	public $tax;
+	
     public $start_date;
     public $end_date;
     public $having;
@@ -13,7 +36,6 @@ class invoice {
     public $sort;
     public $where_field;
     public $where_value;
-    public $domain_id;
 
 	public function __construct()
 	{
@@ -64,14 +86,14 @@ class invoice {
 
 		$sth= dbQuery($sql,
 			#':index_id', index::next('invoice',$pref_group['index_group'], $domain_id,$this->biller_id),
-			':index_id', index::next('invoice',$pref_group['index_group'], $this->domain_id),
-			':domain_id', $this->domain_id,
-			':biller_id', $this->biller_id,
-			':customer_id', $this->customer_id,
-			':type_id', $this->type_id,
+			':index_id',      index::next('invoice',$pref_group['index_group'], $this->domain_id),
+			':domain_id',     $this->domain_id,
+			':biller_id',     $this->biller_id,
+			':customer_id',   $this->customer_id,
+			':type_id',       $this->type_id,
 			':preference_id', $this->preference_id,
-			':date', $this->date,
-			':note', trim($this->note),
+			':date',          $this->date,
+			':note',          trim($this->note),
 			':custom_field1', $this->custom_field1,
 			':custom_field2', $this->custom_field2,
 			':custom_field3', $this->custom_field3,
@@ -97,7 +119,8 @@ class invoice {
 					tax_amount, 
 					gross_total, 
 					description, 
-					total
+					total,
+					attribute
 				) 
 				VALUES 
 				(
@@ -109,23 +132,25 @@ class invoice {
 					:tax_amount, 
 					:gross_total, 
 					:description, 
-					:total
+					:total,
+					:attribute
 				)";
 
 		dbQuery($sql,
-			':invoice_id', $this->invoice_id,
-			':domain_id', $this->domain_id,
-			':quantity', $this->quantity,
-			':product_id', $this->product_id,
-			':unit_price', $this->unit_price,
-			':tax_amount', $this->tax_amount,
+			':invoice_id',  $this->invoice_id,
+			':domain_id',   $this->domain_id,
+			':quantity',    $this->quantity,
+			':product_id',  $this->product_id,
+			':unit_price',  $this->unit_price,
+			':tax_amount',  $this->tax_amount,
 			':gross_total', $this->gross_total,
 			':description', trim($this->description),
-			':total', $this->total
+			':total',       $this->total,
+			':attribute',   $this->attribute
 
 			);
 		$inv_item_id = lastInsertId();
-		invoice_item_tax($inv_item_id, $this->tax, $this->unit_price, $this->quantity, 'insert');
+		invoice_item_tax($inv_item_id, $this->tax, $this->unit_price, $this->quantity, 'insert', $this->domain_id);
 		return $inv_item_id;
 	}
 
@@ -161,7 +186,7 @@ class invoice {
 	$invoice['paid'] = calc_invoice_paid($invoice['id'], $domain_id);
 	$invoice['owing'] = $invoice['total'] - $invoice['paid'];
 
-	$invoice['invoice_items'] = $this->getInvoiceItems($id);
+	$invoice['invoice_items'] = $this->getInvoiceItems($id, $this->domain_id);
 
 	#invoice total tax
 	$sql2 ="SELECT SUM(tax_amount) AS total_tax, SUM(total) AS total FROM ".TB_PREFIX."invoice_items WHERE invoice_id =  :id AND domain_id = :domain_id";
@@ -523,11 +548,14 @@ class invoice {
 		$invoice = $this->select($this->id, $this->domain_id);
 		$ni = new invoice();
 		$ni->domain_id     = $invoice['domain_id'];
+		// Next Index is obtained during insert
+		// $ni->index_id     = $invoice['index_id'];
 		$ni->biller_id     = $invoice['biller_id'];
 		$ni->customer_id   = $invoice['customer_id'];
 		$ni->type_id       = $invoice['type_id'];
 		$ni->preference_id = $invoice['preference_id'];
 		//$ni->date = $invoice['date_original'];
+		// Use todays date
 		$ni->date          = date('Y-m-d');
 		$ni->custom_field1 = $invoice['custom_field1'];
 		$ni->custom_field2 = $invoice['custom_field2'];
@@ -550,6 +578,7 @@ class invoice {
 			$nii->gross_total = $v['gross_total'];
 			$nii->description = $v['description'];
 			$nii->total       = $v['total'];
+			$nii->attribute   = $v['attribute'];
 			$nii->tax         = $v['tax'];
 			$nii_id = $nii->insert_item();
 		}
