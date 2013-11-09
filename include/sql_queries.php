@@ -2340,7 +2340,7 @@ function updateInvoiceItem($id, $quantity, $product_id, $line_number, $line_item
 		':total', $total,
         ':attribute',json_encode($attr),
 		':id', $id,
-		':domain_id', $auth_session->domain_id
+		':domain_id', $domain_id
 		);
 
 	//if from a new invoice item in the edit page user lastInsertId()
