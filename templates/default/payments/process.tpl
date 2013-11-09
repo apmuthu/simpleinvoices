@@ -97,7 +97,8 @@
 
     {if $smarty.get.op == 'pay_selected_invoice'}
         <input type="hidden" name="invoice_id" value="{$invoice.id|htmlsafe}" />
-    {/if} </div>
+    {/if}
+</div>
 
 </form>
 
