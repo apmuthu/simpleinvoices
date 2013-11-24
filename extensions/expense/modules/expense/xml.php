@@ -40,7 +40,7 @@ function sql($type='', $dir, $sort, $rp, $page )
     $qtype = $_REQUEST['qtype'];
 	
 	$where = "";
-	if ($query!="") $where .= " AND $qtype LIKE '%$query%' ";
+	if ($query!="") $where .= " AND :qtype LIKE '%:query%' ";
 	
 	/*Check that the sort field is OK*/
 	$validFields = array('id', 'status', 'amount', 'expense_account_id','biller_id', 'customer_id', 'invoice_id','date','amount','note');
@@ -84,7 +84,11 @@ function sql($type='', $dir, $sort, $rp, $page )
 				$limit";
 	
 	
-	$result = dbQuery($sql, ':domain_id', $domain_id);
+	if ($query!="") {
+		$result = dbQuery($sql, ':domain_id', $domain_id, ':qtype', $_REQUEST['qtype'], ':query', $_REQUEST['query']);
+	} else {
+		$result = dbQuery($sql, ':domain_id', $domain_id);
+	}
 
 	return $result;
 }
