@@ -25,7 +25,7 @@ $query = $_POST['query'];
 $qtype = $_POST['qtype'];
 
 $where = "";
-if ($query) $where = " WHERE $qtype LIKE '%$query%' ";
+if ($query) $where .= " WHERE :qtype LIKE '%:query%' ";
 
 
 
@@ -52,7 +52,12 @@ if (in_array($sort, $validFields)) {
 			LIMIT 
 				$start, $limit";
 
-	$sth = dbQuery($sql) or die(htmlsafe(end($dbh->errorInfo())));
+	if ($query) {
+		$sth = dbQuery($sql, ':query', $query, ':qtype', $qtype);
+	} else {
+		$sth = dbQuery($sql);
+	}
+
 	$customers = $sth->fetchAll(PDO::FETCH_ASSOC);
 /*
 	$customers = null;
@@ -67,7 +72,7 @@ if (in_array($sort, $validFields)) {
 global $dbh;
 
 $sqlTotal = "SELECT count(id) AS count FROM ".TB_PREFIX."products_attributes";
-$tth = dbQuery($sqlTotal) or die(end($dbh->errorInfo()));
+$tth = dbQuery($sqlTotal);
 $resultCount = $tth->fetch();
 $count = $resultCount[0];
 //echo sql2xml($customers, $count);

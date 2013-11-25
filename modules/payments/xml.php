@@ -38,7 +38,7 @@ function sql($type='', $dir, $sort, $rp, $page )
 	/*SQL Limit - end*/
 
 	$where = "";
-	if ($query) $where .= " AND $qtype LIKE '%$query%' ";
+	if ($query) $where .= " AND :qtype LIKE '%:query%' ";
 
 
 	/*Check that the sort field is OK*/
@@ -91,9 +91,11 @@ function sql($type='', $dir, $sort, $rp, $page )
 				$sort $dir 
 				$limit";
 		
-		
-		$result = dbQuery($sql, ':domain_id', $auth_session->domain_id, ':invoice_id', $_GET['id']) or die(htmlsafe(end($dbh->errorInfo())));
-		
+		if ($query) {
+			$result = dbQuery($sql, ':domain_id', $auth_session->domain_id, ':invoice_id', $_GET['id'], ':query', $query, ':qtype', $qtype);
+		} else {
+			$result = dbQuery($sql, ':domain_id', $auth_session->domain_id, ':invoice_id', $_GET['id']);
+		}
 	}
 	#if coming from another page where you want to filter by just one customer
 	elseif (!empty($_GET['c_id'])) {
@@ -132,7 +134,7 @@ function sql($type='', $dir, $sort, $rp, $page )
 				$sort $dir  
 				$limit";
 
-		$result = dbQuery($sql, ':id', $id,':domain_id', $auth_session->domain_id) or die(htmlsafe(end($dbh->errorInfo())));
+		$result = dbQuery($sql, ':id', $id,':domain_id', $auth_session->domain_id);
 		
 	}
 	#if you want to show all invoices - no filters
@@ -171,7 +173,11 @@ function sql($type='', $dir, $sort, $rp, $page )
 				$sort $dir 
 				$limit";
 					
-		$result =  dbQuery($sql,':domain_id', $auth_session->domain_id) or die(end($dbh->errorInfo()));
+		if ($query) {
+			$result =  dbQuery($sql,':domain_id', $auth_session->domain_id, ':query', $query, ':qtype', $qtype);
+		} else {
+			$result =  dbQuery($sql,':domain_id', $auth_session->domain_id);
+		}
 	}
 	
 	return $result;
