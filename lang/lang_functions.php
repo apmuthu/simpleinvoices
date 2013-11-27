@@ -1,37 +1,59 @@
 <?php
 function get_defined_langs() {
 
-  // The root path of the language files. Change if needed.
-  $dir = '.';
+	// The root path of the language files. Change if needed.
+	$dir = '.';
   
-  // Open a known directory, and proceed to read its contents
-  if (! is_dir($dir)) {
-    exit("($dir) is not a directory.");
-  }
+	// Open a known directory, and proceed to read its contents
+	if (! is_dir($dir)) {
+		exit("($dir) is not a directory.");
+	}
 
-  $langs = array();
+	$langs = array();
 
-  if ($dh = opendir($dir)) {
+
+/* 
+//	Implementation - Forward Compatible
+*/
+	try {
+		foreach (new DirectoryIterator($dir) as $entry) {
+			if ($entry->isDir() && !$entry->isDot() && preg_match('/^[a-z]{2}(_[A-Z]{2})?$/', $entry)) {
+				if (SI_DEBUG) {
+					echo "debug: language folder: $lang_dir\n";
+				}
+				$langs[] = $lang_dir;
+			}
+		}
+	} catch (UnexpectedValueException $e) {
+		die($e->getMessage());
+	}
+
+
+/* 
+// Implementation - Legacy
+	if ($dh = opendir($dir)) {
   
-    while (($lang_dir = readdir($dh)) !== false) {
-      if (! preg_match("/^[a-z]{2}$|^[a-z]{2}_[A-Z]{2}$/", $lang_dir)) {
-		continue;
-      }
+		while (($lang_dir = readdir($dh)) !== false) {
+			if (! preg_match("/^[a-z]{2}$|^[a-z]{2}_[A-Z]{2}$/", $lang_dir)) {
+				continue;
+			}
       
-      if (SI_DEBUG) echo "debug: language folder: $lang_dir\n";
-      $langs[] = $lang_dir;
-    }
-  
-    closedir($dh);
-  } else {
-    exit("Error opening folder ($dir)\n");
-  }
+			if (SI_DEBUG) echo "debug: language folder: $lang_dir\n";
+			$langs[] = $lang_dir;
+		}
 
-  // Sort by lang code.
-  sort($langs);
+		closedir($dh);
 
-  return $langs;
-  }
+	} else {
+		exit("Error opening folder ($dir)\n");
+	}
+*/
+
+	// Sort by lang code.
+	sort($langs);
+
+	return $langs;
+}
 
 
 /*

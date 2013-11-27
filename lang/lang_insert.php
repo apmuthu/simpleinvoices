@@ -12,10 +12,11 @@
 include_once("lang_functions.php");
 $langs_defined = get_defined_langs();
 
-$lang_cmp = (isset($_REQUEST['l']) ? trim($_REQUEST['l']) : (isset($argv[1]) ? trim($argv[1]) : false));
+// Ensure that the lang folder name is of correct format and get it
+$lang_cmp = ((isset($_REQUEST['l']) && (preg_match('/^[a-z]{2}_[a-z]{2}$/i', $_REQUEST['l']))) ? $_REQUEST['l'] : (isset($argv[1]) ? trim($argv[1]) : false));
 
+// Ensure that the requested lang folder exists
 if (!in_array($lang_cmp, $langs_defined, true)) die ("Invalid Language.");
-
 // $lang_cmp = "nb_NO";
 
 include "en_GB/lang.php";
