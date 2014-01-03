@@ -148,7 +148,11 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) && !$captcha_failed)
 			$authNamespace->$key = $value;
 		}
 
-		header('Location: .');
+		if ($authNamespace->role_name == 'customer' && $authNamespace->user_id > 0) {
+			header('Location: index.php?module=customers&view=details&action=view&id='.$authNamespace->user_id);
+		} else {
+			header('Location: .');
+		}
 
 	} else {
 	

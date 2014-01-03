@@ -22,7 +22,7 @@ if( ($auth_session->role_name =='customer')
 		|| $acl_view == 'total' 
 		|| $acl_view == 'consulting' 
 		|| $acl_action == 'view'
-		|| (isset($_GET['id']) && ($_GET['id'] != $auth_session->user_id)) ) {
+		|| ($acl_action != '' && isset($_GET['id']) && $_GET['id'] != $auth_session->user_id) ) {
 
 		$checkPermission = "denied";
 
