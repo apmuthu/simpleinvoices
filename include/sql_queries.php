@@ -3226,19 +3226,28 @@ function calc_invoice_paid($inv_idField, $domain_id='') {
 }
 
 
-function calc_customer_total($customer_id, $domain_id='') {
+function calc_customer_total($customer_id, $domain_id='', $isReal=false) {
 	global $LANG;
 	$domain_id = domain_id::get($domain_id);
-	
+
+	$real1 = '';
+	$real2 = '';
+	if ($isReal) {
+		$real1 = " LEFT JOIN ".TB_PREFIX."preferences pr ON (pr.pref_id = iv.preference_id AND pr.domain_id = iv.domain_id)";
+		$real2 = " AND pr.status = 1";
+	}
+
     $sql ="SELECT
 		COALESCE(SUM(ii.total),  0) AS total 
 	FROM
 		".TB_PREFIX."invoice_items ii INNER JOIN
 		".TB_PREFIX."invoices iv ON (iv.id = ii.invoice_id AND iv.domain_id = ii.domain_id)
+		$real1
 	WHERE  
 		iv.customer_id  = :customer
-	AND ii.domain_id = :domain_id";
-	
+	AND ii.domain_id = :domain_id
+	$real2";
+
     $sth = dbQuery($sql, ':customer', $customer_id, ':domain_id',$domain_id);
 	$invoice = $sth->fetch();
 
@@ -3246,9 +3255,16 @@ function calc_customer_total($customer_id, $domain_id='') {
 	return $invoice['total'];
 }
 
-function calc_customer_paid($customer_id, $domain_id='') {
+function calc_customer_paid($customer_id, $domain_id='', $isReal=false) {
 	global $LANG;
 	$domain_id = domain_id::get($domain_id);
+
+	$real1 = '';
+	$real2 = '';
+	if ($isReal) {
+		$real1 = " LEFT JOIN ".TB_PREFIX."preferences pr ON (pr.pref_id = iv.preference_id AND pr.domain_id = iv.domain_id)";
+		$real2 = " AND pr.status = 1";
+	}
 		
 #amount paid calc - start
 	$sql = "
@@ -3256,9 +3272,11 @@ function calc_customer_paid($customer_id, $domain_id='') {
 	FROM
 		".TB_PREFIX."payment ap INNER JOIN
 		".TB_PREFIX."invoices iv ON (iv.id = ap.ac_inv_id AND iv.domain_id = ap.domain_id)
+		$real1
 	WHERE 
 		iv.customer_id = :customer
-	AND ap.domain_id = :domain_id";
+	AND ap.domain_id = :domain_id
+	$real2";
 	
 	$sth = dbQuery($sql, ':customer', $customer_id, ':domain_id',$domain_id);
 	$invoice = $sth->fetch();
