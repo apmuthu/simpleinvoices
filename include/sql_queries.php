@@ -1648,23 +1648,25 @@ function getCustomerInvoices($id, $domain_id='') {
 
 // tested for MySQL	
 	$sql = "SELECT	
-		i.id, 
-		i.index_id, 
-		i.date, 
-		i.type_id, 
-		(SELECT SUM( COALESCE(ii.total, 0))     FROM " . TB_PREFIX . "invoice_items ii WHERE ii.invoice_id = i.id AND ii.domain_id = i.domain_id) AS invd,
-		(SELECT SUM( COALESCE(ap.ac_amount, 0)) FROM " . TB_PREFIX . "payment ap       WHERE ap.ac_inv_id = i.id  AND ap.domain_id = i.domain_id) AS pmt,
+		iv.id, 
+		iv.index_id, 
+		iv.date, 
+		iv.type_id, 
+		(SELECT SUM( COALESCE(ii.total, 0))     FROM " . TB_PREFIX . "invoice_items ii WHERE ii.invoice_id = iv.id AND ii.domain_id = iv.domain_id) AS invd,
+		(SELECT SUM( COALESCE(ap.ac_amount, 0)) FROM " . TB_PREFIX . "payment ap       WHERE ap.ac_inv_id = iv.id  AND ap.domain_id = iv.domain_id) AS pmt,
 		(SELECT COALESCE(invd, 0)) As total, 
 		(SELECT COALESCE(pmt, 0)) As paid, 
-		(select (total - paid)) as owing 
+		(select (total - paid)) as owing,
+		pr.status,
+		pr.pref_inv_wording
 	FROM 
-		" . TB_PREFIX . "invoices i 
+		" . TB_PREFIX . "invoices iv
+		LEFT JOIN ".TB_PREFIX."preferences pr ON (pr.pref_id = iv.preference_id AND pr.domain_id = iv.domain_id)
 	WHERE 
-		i.customer_id = :id
-		and
-		i.domain_id = :domain_id
+		iv.customer_id = :id
+	AND iv.domain_id = :domain_id
 	ORDER BY 
-		i.id DESC;";	
+		iv.id DESC;";	
 
 	$sth = dbQuery($sql, ':id', $id, ':domain_id', $domain_id);
 
