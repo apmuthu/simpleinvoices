@@ -312,10 +312,10 @@ class invoice {
                 $sql_having .= "AND ( date between '$this->start_date' and '$this->end_date' )";
                 break;
             case "money_owed":
-                $sql_having .= "AND ( owing > 0 ) ";
+                $sql_having .= "AND ( owing > 0 ) AND ( status = 1 ) ";
                 break;
             case "paid":
-                $sql_having .= "AND ( owing ='' ) OR ( owing < 0 )";
+                $sql_having .= "AND (( owing ='' ) OR ( owing < 0 )) AND ( status = 1 ) ";
                 break;
             case "draft":
                 $sql_having .= "AND ( status = 0 )";
