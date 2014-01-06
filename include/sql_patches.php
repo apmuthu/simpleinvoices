@@ -1650,7 +1650,7 @@ PRIMARY KEY ( `domain_id`, `id` )
     $patch['286']['date']  = "20131016";
 
     $patch['287']['name']  = "Populate additional user roles like domain_administrator";
-    $patch['287']['patch'] = "INSERT IGNORE INTO `".TB_PREFIX."user_role` (`name`) VALUES ('domain_administrator'), ('customer'), ('biller');";
+    $patch['287']['patch'] = "INSERT IGNORE INTO `".TB_PREFIX."user_role` (`name`) VALUES ('domain_administrator'), ('operator'), ('customer'), ('biller');";
     $patch['287']['date']  = "20131017";
 
     $patch['288']['name']  = "Fully relational now - do away with the si_index table";
