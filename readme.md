@@ -10,6 +10,8 @@ Differences with upstream master codebase which exclusively includes the followi
 * include/sql_patches.php has all needed patches enabled
 * Releases of this fork do not contain the [Zend](https://github.com/dmelo/Zend-1.11/archive/27d7f1b3f45a436a9c795881db1d41689b8f9224.zip) library which must be separately downloaded and extracted into the library/Zend folder.
 * If CAPTCHA feature is to be enabled, then follow instructions in the [securimage-readme.txt file](https://github.com/apmuthu/simpleinvoices/blob/master/library/securimage/securimage-readme.txt) in the <b>library/securimage</b> folder.
+* The [credit card functionality](https://github.com/simpleinvoices/simpleinvoices/commit/8631709085cb4b50bc7d29ca362ec54c93fbf2a5) has been [removed in the parent SI](https://github.com/simpleinvoices/simpleinvoices/commit/7a0b1d2) since it is not PCI compliant ( #135 ) but retained with the caveat for offline use in this fork.
+* [PCI Compliance](https://github.com/simpleinvoices/simpleinvoices/issues/135) is discussed in Issue #135 .
 
 ## Cloning
 SimpleInvoices using gitsubmodules to load the Zend Framework.  
