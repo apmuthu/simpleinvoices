@@ -13,6 +13,8 @@ function sql($type='', $dir, $sort, $rp, $page )
 	global $config;
 	global $auth_session;
 
+	$valid_search_fields = array('ap.id','b.name', 'c.name');
+
 	//SC: Safety checking values that will be directly subbed in
 	if (intval($start) != $start) {
 		$start = 0;
@@ -23,9 +25,6 @@ function sql($type='', $dir, $sort, $rp, $page )
 	if (!preg_match('/^(asc|desc)$/iD', $dir)) {
 		$dir = 'DESC';
 	}
-
-	$query = $_POST['query'];
-	$qtype = $_POST['qtype'];
 
 	/*SQL Limit - start*/
 	$start = (($page-1) * $rp);
@@ -38,7 +37,16 @@ function sql($type='', $dir, $sort, $rp, $page )
 	/*SQL Limit - end*/
 
 	$where = "";
-	if ($query) $where .= " AND :qtype LIKE '%:query%' ";
+	$query = isset($_POST['query']) ? $_POST['query'] : null;
+	$qtype = isset($_POST['qtype']) ? $_POST['qtype'] : null;
+	if ( ! (empty($qtype) || empty($query)) ) {
+		if ( in_array($qtype, $valid_search_fields) ) {
+			$where = " AND $qtype LIKE :query ";
+		} else {
+			$qtype = null;
+			$query = null;
+		}
+	}
 
 
 	/*Check that the sort field is OK*/
@@ -50,8 +58,6 @@ function sql($type='', $dir, $sort, $rp, $page )
 		$sort = "ap.id";
 	}
 
-	$query = null;
-	
 	$sql = "SELECT 
 				ap.*
 				, c.name as cname
@@ -82,10 +88,10 @@ function sql($type='', $dir, $sort, $rp, $page )
 				$sort $dir 
 			$limit";
 		
-		if ($query) {
-			$result = dbQuery($sql, ':domain_id', $auth_session->domain_id, ':invoice_id', $id, ':query', $query, ':qtype', $qtype);
-		} else {
+		if (empty($query)) {
 			$result = dbQuery($sql, ':domain_id', $auth_session->domain_id, ':invoice_id', $id);
+		} else {
+			$result = dbQuery($sql, ':domain_id', $auth_session->domain_id, ':invoice_id', $id, ':query', "%$query%");
 		}
 	}
 	#if coming from another page where you want to filter by just one customer
@@ -99,7 +105,7 @@ function sql($type='', $dir, $sort, $rp, $page )
 				$sort $dir  
 			$limit";
 
-		$result = dbQuery($sql, ':id', $id,':domain_id', $auth_session->domain_id);
+		$result = dbQuery($sql, ':id', $id, ':domain_id', $auth_session->domain_id);
 		
 	}
 	#if you want to show all invoices - no filters
@@ -112,10 +118,10 @@ function sql($type='', $dir, $sort, $rp, $page )
 				$sort $dir 
 			$limit";
 					
-		if ($query) {
-			$result =  dbQuery($sql,':domain_id', $auth_session->domain_id, ':query', $query, ':qtype', $qtype);
+		if (empty($query)) {
+			$result =  dbQuery($sql, ':domain_id', $auth_session->domain_id);
 		} else {
-			$result =  dbQuery($sql,':domain_id', $auth_session->domain_id);
+			$result =  dbQuery($sql, ':domain_id', $auth_session->domain_id, ':query', "%$query%");
 		}
 	}
 	
