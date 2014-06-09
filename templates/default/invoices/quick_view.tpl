@@ -152,20 +152,20 @@
 		<tr class="customer">
 			<th>{$LANG.city}:</th>
 			<td colspan="3">{$customer.city|htmlsafe}</td>
-			<th>Ph:</th>
+			<th>{$LANG.phone_short}:</th>
 			<td>{$customer.phone|htmlsafe}</td>
 		</tr>	
 		<tr class="customer">
-			<th>{$LANG.state}, ZIP:</th>
+			<th>{$LANG.state}, {$LANG.zip}:</th>
 			<td colspan="3">{$customer.state|htmlsafe}, {$customer.zip_code|htmlsafe}</td>
-			<th>{$LANG.fax}:</th>
-			<td>{$customer.fax|htmlsafe}</td>
+			<th>{$LANG.mobile_short}:</th>
+			<td>{$customer.mobile_phone|htmlsafe}</td>
 		</tr>	
 		<tr class="customer">
 			<th>{$LANG.country}:</th>
 			<td colspan="3">{$customer.country|htmlsafe}</td>
-			<th>Mobile:</th>
-			<td>{$customer.mobile_phone|htmlsafe}</td>
+			<th>{$LANG.fax}:</th>
+			<td>{$customer.fax|htmlsafe}</td>
 		</tr>	
 		<tr class="customer">
 			<th>{$LANG.email}:</th>
