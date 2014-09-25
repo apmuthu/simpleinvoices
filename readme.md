@@ -18,6 +18,7 @@ SimpleInvoices using gitsubmodules to load the Zend Framework.
 When cloning the repository use the `--recursive` option to ensure that Zend is retrieved.  
 Upstream: `git clone --recursive git@github.com:simpleinvoices/simpleinvoices.git`
 This fork: `git clone --recursive git@github.com:apmuthu/simpleinvoices.git`
+The [exportPro extension](https://github.com/Darksider3/simpleinvoices/commit/24d2e968cb6081f7b27aa030bf95b34865158af7) is too big to be included in this and the parent forks.
 
 ## Downloads
 * Bleeding Edge Code: [SI Git Master](http://github.com/simpleinvoices/simpleinvoices/archive/master.zip) (.zip)
