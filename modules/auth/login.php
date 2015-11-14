@@ -62,10 +62,12 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) && !$captcha_failed)
 	// ...or configure the instance with setter methods
 	$authAdapter = new Zend_Auth_Adapter_DbTable($zendDb);
 
+	$PatchesDone = getNumberOfDoneSQLPatches();
+
 	//sql patch 161 changes user table name - need to accomodate
-	$user_table = (getNumberOfDoneSQLPatches() < "161") ? "users" : "user";
-	$user_email = (getNumberOfDoneSQLPatches() < "184") ? "user_email" : "email";
-	$user_password = (getNumberOfDoneSQLPatches() < "184") ? "user_password" : "password";
+	$user_table = ($PatchesDone < "161") ? "users" : "user";
+	$user_email = ($PatchesDone < "184") ? "user_email" : "email";
+	$user_password = ($PatchesDone < "184") ? "user_password" : "password";
 
 	$authAdapter->setTableName(TB_PREFIX.$user_table)
 				->setIdentityColumn($user_email)
@@ -89,8 +91,6 @@ if (!empty($_POST['user']) && !empty($_POST['pass']) && !$captcha_failed)
 		/*
 		* grab user data  from the database
 		*/
-
-		$PatchesDone = getNumberOfDoneSQLPatches();
 
 		//patch 147 adds user_role table - need to accomodate pre and post patch 147
 		if ( $PatchesDone < "147" ) {
