@@ -88,7 +88,6 @@ class index
 
     }
 
-
     public static function rewind($node, $sub_node=0, $domain_id='', $sub_node_2=0)
     {
         $domain_id = domain_id::get($domain_id);
