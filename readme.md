@@ -47,6 +47,7 @@ The [exportPro extension](https://github.com/Darksider3/simpleinvoices/commit/24
 
 We also have a mailing list for tracking commit activity. This is hosted on Google Groups. You can find it here: https://groups.google.com/forum/?fromgroups#!forum/simpleinvoices-trac
 
+* [SI on Docker](https://github.com/justinkelly/docker-simple-invoices)
 
 ## Translations
 We are proud that SimpleInvoices is currently available in 25 different languages but we would love for that number to be even bigger!  
