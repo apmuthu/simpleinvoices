@@ -22,6 +22,8 @@ Upstream: `git clone --recursive git@github.com:simpleinvoices/simpleinvoices.gi
 This fork: `git clone --recursive git@github.com:apmuthu/simpleinvoices.git`
 The [exportPro extension](https://github.com/Darksider3/simpleinvoices/commit/24d2e968cb6081f7b27aa030bf95b34865158af7) is too big to be included in this and the parent forks.
 
+If a [non-release download](https://github.com/simpleinvoices/simpleinvoices/archive/master.zip) of the SI code is taken from GitHub (instead of a recursive repo clone), then download the [Zend v1.11 library](https://github.com/dmelo/Zend-1.11/archive/27d7f1b3f45a436a9c795881db1d41689b8f9224.zip) manually and expand it into the `library/Zend` folder.
+
 ## Downloads
 * Bleeding Edge Code: [SI Git Master](http://github.com/simpleinvoices/simpleinvoices/archive/master.zip) (.zip)
 * Latest Beta Release: [2013.1 beta 7](http://download.simpleinvoices.org/simpleinvoices/downloads/simpleinvoices.2013.1.beta.7.zip) (.zip)
