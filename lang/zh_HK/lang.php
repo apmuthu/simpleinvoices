@@ -199,10 +199,8 @@ $LANG['gross_total'] = "總額";//1
 $LANG['hello'] = "你好";//1
 $LANG['help'] = "幫助";//1
 $LANG['help_age'] = "在“年齡”字段指示多久發票已未付。如果發票創建於本月1日起，在該月的21日，如果發票仍沒有被全部發票'年齡'將是21天。<br/><br/>如果發票有被付清那麼“年齡”字段將顯示為空白。";//1
-$LANG['help_backup_database'] = "為備份正常運作，網頁伺服器的用戶(希望你正在運行Apache)必須具有讀/寫權限database_backups目錄中的Simple Invoices文件夾<br/><br/>另外，如果你有多餘的偏執狂(像我一樣:) )關於數據的，我建議使用phpMyAdmin。此備份腳本應該工作正常，但如果需要“企業級”的備份可靠性phpMyAdmin會好一些<br/><br/>注：如果您在演示環境在SourceForge上使用Simple Invoices，備份不會正常運作因為這是他們服務器的設定。
-";//1
-$LANG['help_backup_database_fwrite'] = "<b>有fwrite()的錯誤？</b><br />如果您試圖備份時收到fwrite()的錯誤您簡單的發票數據庫，這意味著，網頁伺服器的用戶(希望你正在運行Apache)沒有讀/寫權限的 tmp/database_backups目錄中的Simple Invoice<br/> <br />請更改該目錄的權限，然後再次嘗試備份。要更改的Unix /Linux/ OSX 入 tmp/database_backups目錄的權限，以Simple Invoice目錄( <i> 入 / var/ www / html/ simpleinvoices</i> )，然後發出chmod命令給網絡服務器的用戶讀/寫權限( <i>chmod -Rv 777 tmp/database_backups</i> )
-";//1
+$LANG['help_backup_database'] = "為備份正常運作，網頁伺服器的用戶(希望你正在運行Apache)必須具有讀/寫權限database_backups目錄中的Simple Invoices文件夾<br/><br/>另外，如果你有多餘的偏執狂(像我一樣:) )關於數據的，我建議使用phpMyAdmin。此備份腳本應該工作正常，但如果需要“企業級”的備份可靠性phpMyAdmin會好一些<br/><br/>注：如果您在演示環境在SourceForge上使用Simple Invoices，備份不會正常運作因為這是他們服務器的設定。";//1
+$LANG['help_backup_database_fwrite'] = "<b>有fwrite()的錯誤？</b><br />如果您試圖備份時收到fwrite()的錯誤您簡單的發票數據庫，這意味著，網頁伺服器的用戶(希望你正在運行Apache)沒有讀/寫權限的 tmp/database_backups目錄中的Simple Invoice<br/> <br />請更改該目錄的權限，然後再次嘗試備份。要更改的Unix /Linux/ OSX 入 tmp/database_backups目錄的權限，以Simple Invoice目錄( <i> 入 / var/ www / html/ simpleinvoices</i> )，然後發出chmod命令給網絡服務器的用戶讀/寫權限( <i>chmod -Rv 777 tmp/database_backups</i> )";//1
 $LANG['help_blog'] = "Simple Invoices Blog";//1
 $LANG['help_community_forums'] = "社區論壇";//1
 $LANG['help_cost'] = "“費用”指的是，這款產品花費你的成本 - 這是用於庫存和利潤計算之用";//1
@@ -228,12 +226,9 @@ $LANG['help_inv_pref_invoice_payment_method'] = "這是您指定你想怎樣顧�
 $LANG['help_inv_pref_invoice_wording'] = "這就是發票的措詞將是 - 也就是說，如果你輸入報價 - 於管理發票屏幕它會說報價在發票類型字段，並通過該發票是會說，而不是發票即報價。報價編號, 報價日期等。";//1
 $LANG['help_inv_pref_locale'] = "語言環境";//1
 $LANG['help_inv_pref_payment_line1_name'] = "在這裡，您可以即“帳戶名”指定的付款行1名。";//1
-$LANG['help_inv_pref_payment_line1_value'] = "在這裡，您可以指定付款行1的值
-您的銀行帳戶亦即這個名字 - 'H。 ＆M.辛普森。'";//1
-$LANG['help_inv_pref_payment_line2_name'] = "在這裡，您可以指定付款行2的值 
- 也就是'帳號'。";//1
-$LANG['help_inv_pref_payment_line2_value'] = "在這裡，您可以指定付款行2的值 
- 也就是賬號'0123-4567-89'。";//1
+$LANG['help_inv_pref_payment_line1_value'] = "在這裡，您可以指定付款行1的值您的銀行帳戶亦即這個名字 - 'H。 ＆M.辛普森。'";//1
+$LANG['help_inv_pref_payment_line2_name'] = "在這裡，您可以指定付款行2的值  也就是'帳號'。";//1
+$LANG['help_inv_pref_payment_line2_value'] = "在這裡，您可以指定付款行2的值  也就是賬號'0123-4567-89'。";//1
 $LANG['help_inv_pref_status'] = "發票可以有“草稿”或“真正的”的狀態。草稿表示這是一個類似的報價並且不包含在銷售報告。 “真正的'意味著是一個真正的發票，並包含在銷售報告。";//1
 $LANG['help_inv_pref_what_the'] = "發票偏好可讓您定義發票的字眼。你可以有很多不同的“發票偏好設定\"在簡單的發票界定為你想要的，但你只能選擇每張發票每1'發票偏好“。<br /><br />即如果你想要的發票的標題說“MOES酒館 - 發票'，而不是默認的'發票'，你可以編輯”發票標題“字段在的有關發票偏好來實現這個結果";//1
 $LANG['help_invoice_create'] = "創建發票是很容易。一旦記帳方和客戶已被添加到的系統，所有你需要做的是選擇從“發票+”菜單中的發票類型，填寫詳細信息，並點擊“保存發票”。";//1
